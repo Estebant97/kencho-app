@@ -1,18 +1,13 @@
 const mongoose = require( 'mongoose' );
 const uuid = require('uuid');
 
-const postSchema = mongoose.Schema({
+const postsSchema = mongoose.Schema({
     
     postId:{
         type : String,
         required : true,
         unique : true,
         default: uuid.v4()
-    },
-    date:{
-        type: Date,
-        default:date.now()
-
     },
     title : {
         type : String,

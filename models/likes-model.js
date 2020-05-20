@@ -1,7 +1,7 @@
 const mongoose = require( 'mongoose' );
 const uuid = require('uuid');
 
-const likedPostSchema = mongoose.Schema({
+const likesSchema = mongoose.Schema({
     
     postId:{
         type:mongoose.Schema.Types.ObjectId,
@@ -20,11 +20,11 @@ const likedPostSchema = mongoose.Schema({
     }
 });
 
-const likedPostModel = mongoose.model( 'likedPosts', likedPostSchema );
+const likeModel = mongoose.model( 'likes', likesSchema );
 
-const LikedPost ={
+const Likes = {
     createLikedPost : function( newLikedPost ){
-        return likedPostModel
+        return likeModel
                 .create( newLikedPost )
                 .then( likedPost => {
                     return likedPost;
@@ -33,11 +33,11 @@ const LikedPost ={
                     throw new Error( err.message );
                 }); 
     },
-    getAllLikedPost : function(id){
-        return likedPostModel
+    getAllLikedPosts : function(id){
+        return likeModel
         .find({userID:id})
-        .then(likedPost=>{
-            return likedPost;
+        .then(likedPosts=>{
+            return likedPosts;
         })
         .catch( err => {
             throw new Error( err.message );
@@ -46,5 +46,5 @@ const LikedPost ={
 }
 
 module.exports = {
-    LikedPost
+    Likes
 };

@@ -4,7 +4,7 @@ const bodyParser = require( 'body-parser');
 const mongoose = require( 'mongoose' );
 const jsonParser = bodyParser.json();
 const { Comments } = require('./models/comments-model');
-const { LikedPosts } = require('./models/likedposts-model');
+const { Likes } = require('./models/likes-model');
 const { Posts } = require('./models/posts-model');
 const { User } = require('./models/users-model');
 const {DATABASE_URL, PORT} = require( './config' );
@@ -101,7 +101,7 @@ app.post('/newPost',jsonParser,(req,res)=>{
 
 })
 app.listen( PORT, () => {
-    console.log( "This server is running on port 8080" );
+    console.log( "This server is running on port 3000" );
 
     new Promise( ( resolve, reject ) => {
 
