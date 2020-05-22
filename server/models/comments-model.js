@@ -13,12 +13,12 @@ const commentSchema = mongoose.Schema({
         type : String,
         required : true
     },
-    user : {
+    userOid : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'users',
         required : true
     },
-    post : {
+    postOid : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'posts',
         required : true
@@ -41,8 +41,8 @@ const Comments = {
     //COMMENTS DEL ACTIVITY LOG
     getAllCommentsByUserId : function(id){
         return commentModel
-                .find({user: id})
-                .populate('post', ['title'] )
+                .find({userOid: id})
+                .populate('postOid', ['title'] )
                 .then( comments => {
                     return comments;
                 })

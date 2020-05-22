@@ -3,12 +3,12 @@ const uuid = require('uuid');
 
 const likesSchema = mongoose.Schema({
     
-    postId:{
+    postOid:{
         type:mongoose.Schema.Types.ObjectId,
         ref : 'posts',
         required:true
     },
-    userID:{
+    userOid:{
         type:mongoose.Schema.Types.ObjectId,
         ref : 'users',
         required:true
@@ -17,6 +17,12 @@ const likesSchema = mongoose.Schema({
     liked: {
         type: Boolean,
         required: true
+    },
+    commentId: {
+        type : String,
+        required : true,
+        unique : true,
+        default: uuid.v4()
     }
 });
 
@@ -33,9 +39,10 @@ const Likes = {
                     throw new Error( err.message );
                 }); 
     },
-    getAllLikedPosts : function(id){
+    getAllLikedPostsByUser : function(id){
         return likeModel
-        .find({userID:id})
+        .find({userOid:id})
+        .populate('postOid', ['title'])
         .then(likedPosts=>{
             return likedPosts;
         })

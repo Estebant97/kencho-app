@@ -20,10 +20,9 @@ const postsSchema = mongoose.Schema({
     },
     comments:[{
         type:mongoose.Schema.Types.ObjectId,
-        ref : 'comments',
-        required:true
+        ref : 'comments'
     }],
-    user:{
+    userOid:{
         type:mongoose.Schema.Types.ObjectId,
         ref: 'users',
         required:true
@@ -48,7 +47,7 @@ const Posts = {
     getAllPosts : function(){
         return postModel
                 .find()
-                .populate('user', ['username'] )
+                .populate('userOid', ['username'] )
                 .then( posts => {
                     return posts;
                 })
@@ -60,6 +59,8 @@ const Posts = {
         return postModel
                 .find( {postId: id})
                 .populate( 'comments', ['content'] )
+                //checar este populate que si funciona pero no se si mostrara todos los usuarios
+                .populate( 'userOid', ['username'] )
                 //preguntar como mostrar el username tambien por cada comment
                 // checar algo de populate adentro del populate
                 .then( post => {
@@ -71,14 +72,14 @@ const Posts = {
     },
     getPostByUser: function(id){
         return postModel
-        .find({userId:id})
-        .then( post => {
-            return post;
-        })
-        .catch( err => {
-            throw new Error( err.message );
-        });
-
+            .find({userOid:id})
+            .populate('userOid', ['username'])
+            .then( post => {
+                return post;
+            })
+            .catch( err => {
+                throw new Error( err.message );
+            });
     }
 }
 

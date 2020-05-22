@@ -7,7 +7,6 @@ const userSchema = mongoose.Schema({
         required : true,
         index: {unique:true}
     },
-    
     userId : {
         type : String,
         required : true,
@@ -28,7 +27,7 @@ const userSchema = mongoose.Schema({
 
 const userModel = mongoose.model( 'users', userSchema );
 
-const User = {
+const Users = {
     createUser : function( newUser ){
         return userModel
                 .create( newUser )
@@ -52,5 +51,5 @@ const User = {
 }
 
 module.exports = {
-    User
+    Users
 };
