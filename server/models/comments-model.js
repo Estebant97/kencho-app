@@ -1,26 +1,18 @@
 const mongoose = require( 'mongoose' );
-const uuid = require('uuid');
 
 const commentSchema = mongoose.Schema({
-    
-    commentId:{
-        type : String,
-        required : true,
-        unique : true,
-        default: uuid.v4()
+    userOid:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref : 'users',
+        required:true
+    },
+    postOid : {
+        type:mongoose.Schema.Types.ObjectId,
+        ref : 'users',
+        required:true
     },
     content : {
         type : String,
-        required : true
-    },
-    userOid : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'users',
-        required : true
-    },
-    postOid : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'posts',
         required : true
     }
 });
@@ -42,13 +34,23 @@ const Comments = {
     getAllCommentsByUserId : function(id){
         return commentModel
                 .find({userOid: id})
-                .populate('postOid', ['title'] )
+                .populate('userOid', ['username'] )
                 .then( comments => {
                     return comments;
                 })
                 .catch( err => {
                     throw new Error( err.message );
                 });
+    }, 
+    getAllComments : function() {
+        return commentModel
+            .find()
+            .then( comments => {
+                return comments;
+            })
+            .catch( err => {
+                throw new Error( err.message );
+            })
     }
 }
 

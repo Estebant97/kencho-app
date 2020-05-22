@@ -1,5 +1,4 @@
 const mongoose = require( 'mongoose' );
-const uuid = require('uuid');
 
 const likesSchema = mongoose.Schema({
     
@@ -12,17 +11,10 @@ const likesSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref : 'users',
         required:true
-
     },
     liked: {
         type: Boolean,
         required: true
-    },
-    commentId: {
-        type : String,
-        required : true,
-        unique : true,
-        default: uuid.v4()
     }
 });
 

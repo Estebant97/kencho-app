@@ -85,7 +85,6 @@ app.get('/postsById/:postId',(req,res) => {
             return res.status( 500 ).end();
         });
 });
-
 //GET POST BY USER ID 
 //EL USUARIO PUEDE VER LOS POSTS QUE HA HECHO
 app.get('/postsByUser/:userId',(req,res)=>{
@@ -183,20 +182,57 @@ app.post('/newLike', jsonParser, (req, res) => {
 // **************************COMMENTS************************************
 app.post('/newComment', jsonParser, (req, res) => {
     const {content, userOid, postOid} = req.body;
-    const newComment = {content, userOid, postOid,};
+    const newComment = {content, userOid, postOid};
 
     Comments
         .addComment(newComment)
-        .then(comment => {
-            return res.status( 201 ).json( comment );
+        .then(c => {
+            return c;
+        })
+        .then(cJson => {
+            console.log(cJson);
+            Posts
+                .updateComments(postOid, cJson._id)
+                .then(updatedPost => {
+                    return res.status(201).json(updatedPost);
+                });
         })
         .catch( err => {
             res.statusMessage = err.message;
             return res.status( 500 ).end()
-        })
+        });
+
+    
 });
 
+app.get('/getCommentsByUserId/:userId', (req, res) => {
+    const id = req.params.userId;
+    if( !id ){
+        res.statusMessage = "id not sent as params";
+        return res.status(406).end(); 
+    }
+    Comments
+        .getAllCommentsByUserId(id)
+        .then(comments=>{
+            return res.status( 200 ).json( comments );
+        })
+        .catch( err => {
+            res.statusMessage = err.message;
+            return res.status( 500 ).end();
+        });
+});
 
+app.get('/getAllComments', (req, res) => {
+    Comments
+        .getAllComments()
+        .then( comments => {
+            return res.status( 200 ).json( comments );
+        })
+        .catch( err => {
+            res.statusMessage = err.message;
+            return res.status( 500 ).end();
+        })
+})
 
 
 app.listen( PORT, () => {

@@ -1,14 +1,6 @@
 const mongoose = require( 'mongoose' );
-const uuid = require('uuid');
 
 const postsSchema = mongoose.Schema({
-    
-    postId:{
-        type : String,
-        required : true,
-        unique : true,
-        default: uuid.v4()
-    },
     title : {
         type : String,
         required : true
@@ -57,10 +49,10 @@ const Posts = {
     },
     getPostById : function( id ){
         return postModel
-                .find( {postId: id})
+                .find( {_id: id})
                 .populate( 'comments', ['content'] )
-                //checar este populate que si funciona pero no se si mostrara todos los usuarios
                 .populate( 'userOid', ['username'] )
+                //checar este populate que si funciona pero no se si mostrara todos los usuarios
                 //preguntar como mostrar el username tambien por cada comment
                 // checar algo de populate adentro del populate
                 .then( post => {
@@ -79,6 +71,16 @@ const Posts = {
             })
             .catch( err => {
                 throw new Error( err.message );
+            });
+    }, 
+    updateComments : function(idPost, idComment){
+        return postModel
+            .update({_id: idPost}, {$push: {comments: idComment}})
+            .then(updatedPost => {
+                return updatedPost;
+            })
+            .catch(err => {
+                throw new Error(err.message);
             });
     }
 }
