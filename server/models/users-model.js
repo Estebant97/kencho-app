@@ -8,7 +8,8 @@ const userSchema = mongoose.Schema({
     },
     email:{
         type: String,
-        required:true
+        required:true,
+        unique: true
     },
     password:{
         type: String,
@@ -40,6 +41,16 @@ const Users = {
                 .catch( err => {
                     throw new Error( err.message );
                 }); 
+    },
+    getUserByEmail : function( email ){
+        return userModel
+                .findOne( {email} )
+                .then( user => {
+                    return user;
+                })
+                .catch( err => {
+                    throw new Error(err.message);
+                });
     }
 }
 

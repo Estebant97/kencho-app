@@ -4,11 +4,13 @@ const bodyParser = require( 'body-parser');
 const mongoose = require( 'mongoose' );
 const morgan = require( 'morgan' );
 const jsonParser = bodyParser.json();
+const bcrypt = require( 'bcryptjs' );
+const jwt = require( 'jsonwebtoken' );
 const { Comments } = require('./models/comments-model');
 const { Likes } = require('./models/likes-model');
 const { Posts } = require('./models/posts-model');
 const { Users } = require('./models/users-model');
-const {DATABASE_URL, PORT} = require( './config' );
+const {DATABASE_URL, PORT, SECRET_TOKEN} = require( './config' );
 //const cors = require( './middleware/cors' );
 const app = express();
 //use
@@ -18,8 +20,18 @@ app.use( morgan( 'dev' ) );
 
 
 //*******************USERS********************
+app.get('/validate-user', (req, res) => {
+    const {sessiontoken} = req.headers;
+    jwt.verify( sessiontoken, SECRET_TOKEN, (err, decoded ) => {
+        if( err ){
+            res.statusMessage = "Session expired";
+            return res.status( 400 ).end();
+        }
+        return res.status( 200 ).json( decoded );
+    });
+});
 // get all users
-app.get('/users', (req, res) =>{
+app.get('/allUsers', (req, res) =>{
     Users
     .getAllUsers()
     .then(users => {
@@ -30,28 +42,73 @@ app.get('/users', (req, res) =>{
         return res.status(500).end();
     })
 });
-//post a new user
-app.post('/newUser', jsonParser, (req, res) => {
+// Login
+app.post( '/users/login', jsonParser, (req, res) => {
+    let {email, password } = req.body;
+    if( !email || !password ){
+        res.statusMessage = "Parameter missing in the body of the request";
+        return res.status( 406 ).end();
+    }
+    Users
+        .getUserByEmail( email )
+        .then( user => {
+            if( user ){
+                bcrypt.compare( password, user.password )
+                    .then( result => {
+                        if(result) {
+                            let userData = {
+                                username : user.username,
+                                email: user.email
+                            };
+                            jwt.sign(userData, SECRET_TOKEN, {expiresIn : '1h'}, (err, token) => {
+                                if( err ){
+                                    res.statusMessage = "Something went wrong with generating the token";
+                                    return res.status( 400 ).end();
+                                }
+                                return res.status(200).json({ token });
+                            })
+                            //return res.status( 200 ).json( user );
+                        }else {
+                            throw new Error("Invalid credentials");
+                        }
+                    })
+                    .catch( err => {
+                        res.statusMessage = err.message;
+                        return res.status( 500 ).end();
+                    });
+            } else {
+                throw new Error( "User doesnt exists!" );
+            }
+        })
+        .catch( err => {
+            res.statusMessage = err.message;
+            return res.status( 500 ).end();
+        });
+});
+//post a new user Register
+app.post('/users/register', jsonParser, (req, res) => {
     const {username,email, password} = req.body;
     if( !username || !email||!password){
         res.statusMessage = "One of these parameters is missing in the request";
         return res.status( 406 ).end();
     }
-    const newUser={
-           username,
-           email, 
-           password
-       };
-
-    Users
-    .createUser(newUser)
-    .then(user=>{
-        return res.status(201).json(user);
-    })
-    .catch( err => {
-        res.statusMessage = err.message;
-        return res.status( 500 ).end();
-    });
+    bcrypt.hash(  password, 10)
+        .then( hashedPassword => {
+            const newUser={
+                username,
+                email, 
+                password : hashedPassword
+            }
+            Users
+            .createUser(newUser)
+            .then(user=>{
+                return res.status(201).json(user);
+            })
+            .catch( err => {
+                res.statusMessage = err.message;
+                return res.status( 500 ).end();
+            });
+        });
 });
 //**********************POSTS********************
 //GET ALL POSTS
