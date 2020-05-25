@@ -48,10 +48,11 @@
 .borderImage{
   border-style: solid;
   border-width: medium;
-  border-top-color: #16DB93;
-  border-bottom-color: #A4036F;
-  border-left-color: #EFEA5A;
-  border-right-color: #FE5E41;
+  border-top-color: #03889e;
+  border-bottom-color: #00c2cb;
+
+  border-left-color:#ff1616;
+  border-right-color: #ff914d;
   width: 65%;
   margin-left: auto;
   margin-right: auto;
