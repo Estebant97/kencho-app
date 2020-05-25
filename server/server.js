@@ -77,7 +77,7 @@ app.post( '/users/login', jsonParser, (req, res) => {
                         return res.status( 500 ).end();
                     });
             } else {
-                throw new Error( "User doesnt exists!" );
+                throw new Error( "User doesn't exists!" );
             }
         })
         .catch( err => {

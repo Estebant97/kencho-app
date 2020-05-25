@@ -41,7 +41,29 @@ const Likes = {
         .catch( err => {
             throw new Error( err.message );
         });
+    },
+    // change the boolean from True to False
+    delLikedPostById : function( id ){
+        return likeModel
+                .findOneAndRemove({"_id" : id})
+                .then( likedPost => {
+                    return likedPost;
+                })
+                .catch( err => {
+                    return err;
+                });
+    }, 
+    patchLikedById : function(id, uLiked){
+        return userModel
+                .findByIdAndUpdate({"_id": id}, {"liked": uLiked})
+                .then( likeUpdate => {
+                    return likeUpdate;
+                })
+                .catch(err => {
+                    return err;
+                })  
     }
+    // update liked post change boolean from False to True;
 }
 
 module.exports = {
