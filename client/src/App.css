@@ -36,3 +36,38 @@
     transform: rotate(360deg);
   }
 }
+
+.images {
+  height: 380px;
+  width: 400px;
+
+}
+.imagesFeed{
+  width: 100%; text-align: center;
+}
+.borderImage{
+  border-style: solid;
+  border-width: medium;
+  border-top-color: #16DB93;
+  border-bottom-color: #A4036F;
+  border-left-color: #EFEA5A;
+  border-right-color: #FE5E41;
+  width: 65%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+/*Checar margins y paddings de elementos*/
+.arrowUp{
+  color: #00e600;
+  margin-right: 20px;
+  
+}
+.arrowDown{
+  color:red;
+}
+.comment{
+  color:#03989e;
+  /*checar el flexbox para hacerlo responsive*/
+  margin-left: 150px;
+}
