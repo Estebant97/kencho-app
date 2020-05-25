@@ -51,6 +51,26 @@ const Comments = {
             .catch( err => {
                 throw new Error( err.message );
             })
+    }, 
+    delCommentById : function( id ){
+        return commentModel
+                .findOneAndRemove({"_id" : id})
+                .then( comment => {
+                    return comment;
+                })
+                .catch( err => {
+                    return err;
+                });
+    }, 
+    patchCommentById : function(id, uContent){
+        return userModel
+                .findByIdAndUpdate({"_id": id}, {"content": uContent})
+                .then( commentUpdate => {
+                    return commentUpdate;
+                })
+                .catch(err => {
+                    return err;
+                })  
     }
 }
 

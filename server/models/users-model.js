@@ -51,6 +51,28 @@ const Users = {
                 .catch( err => {
                     throw new Error(err.message);
                 });
+    },
+    // delete user by id
+    delUserById : function(id){
+        return userModel
+                .findOneAndRemove({"_id" : id})
+                .then( user => {
+                    return user;
+                })
+                .catch( err => {
+                    return err;
+                });
+    },
+    // patch by id
+    patchUserById : function(id, uUsername, uEmail, uPassword){
+        return userModel
+                .findByIdAndUpdate({"_id": id}, {"username": uUsername, "email": uEmail, "password" : uPassword})
+                .then( userUpdate => {
+                    return userUpdate;
+                })
+                .catch(err => {
+                    return err;
+                })  
     }
 }
 

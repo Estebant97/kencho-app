@@ -82,6 +82,27 @@ const Posts = {
             .catch(err => {
                 throw new Error(err.message);
             });
+    },
+    delPostById : function( id ){
+        return postModel
+                .findOneAndRemove({"_id" : id})
+                .then( post => {
+                    return post;
+                })
+                .catch( err => {
+                    return err;
+                });
+    }, 
+    // solo se puede cambiar el titulo del post
+    patchUserById : function(id, uTitle){
+        return userModel
+                .findByIdAndUpdate({"_id": id}, {"title": uTitle, "image": uImage})
+                .then( userUpdate => {
+                    return userUpdate;
+                })
+                .catch(err => {
+                    return err;
+                })  
     }
 }
 
