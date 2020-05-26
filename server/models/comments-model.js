@@ -63,7 +63,7 @@ const Comments = {
                 });
     }, 
     patchCommentById : function(id, uContent){
-        return userModel
+        return commentModel
                 .findByIdAndUpdate({"_id": id}, {"content": uContent})
                 .then( commentUpdate => {
                     return commentUpdate;

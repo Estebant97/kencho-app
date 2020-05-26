@@ -19,7 +19,7 @@ app.use( morgan( 'dev' ) );
 //app.use( cors );
 
 
-//*******************USERS********************
+//*****************************************************USERS*********************************************
 app.get('/validate-user', (req, res) => {
     const {sessiontoken} = req.headers;
     jwt.verify( sessiontoken, SECRET_TOKEN, (err, decoded ) => {
@@ -58,7 +58,8 @@ app.post( '/users/login', jsonParser, (req, res) => {
                         if(result) {
                             let userData = {
                                 username : user.username,
-                                email: user.email
+                                email: user.email, 
+                                userOid : user._id
                             };
                             jwt.sign(userData, SECRET_TOKEN, {expiresIn : '1h'}, (err, token) => {
                                 if( err ){
@@ -74,7 +75,7 @@ app.post( '/users/login', jsonParser, (req, res) => {
                     })
                     .catch( err => {
                         res.statusMessage = err.message;
-                        return res.status( 500 ).end();
+                        return res.status( 402 ).end();
                     });
             } else {
                 throw new Error( "User doesn't exists!" );
@@ -110,7 +111,7 @@ app.post('/users/register', jsonParser, (req, res) => {
             });
         });
 });
-//**********************POSTS********************
+//*****************************************POSTS*****************************************
 //GET ALL POSTS
 app.get( '/posts', ( req, res ) => {
     Posts
@@ -174,31 +175,106 @@ app.get('/postsByUser/:userId',(req,res)=>{
 //ADD POST
 app.post('/newPost',jsonParser,(req,res)=>{
     //CHECAR QUE ONDA CON COMMENTS Y USER QUE SON REFERENCIADOS
+    //primero checar que el usuario que quiere crear el post existe!
+    //const id = req.params._id;
+    // tener una funcion getUserById --> si esa funcion retorna existosamente hacer el create del post
+    // si no retornar un
     const {title,image,comments,userOid} = req.body;
     if( !title||!image ||!userOid ){
         res.statusMessage = "One of these parameters is missing in the request";
         return res.status( 406 ).end();
     }
 
-    const newPost={
-           title,
-           image,
-           comments,
-           userOid
-       };
+    const newPost={title,image,comments,userOid};
 
     Posts
-    .addPost(newPost)
-    .then(post=>{
-        return res.status(201).json(post);
-    })
-    .catch( err => {
-        res.statusMessage = err.message;
-        return res.status( 500 ).end();
-    });
+        .addPost(newPost)
+        .then(post=>{
+            return res.status(201).json(post);
+        })
+        .catch( err => {
+            res.statusMessage = err.message;
+            return res.status( 500 ).end();
+        });
 
 });
+// DELETE POST BY ID
+// in case a post is deleted it must be removed from the likes and comments should be wiped
+app.delete( '/deletePost/:id', (req, res) => {
+    let id = req.params.id;
+    // first delete comments
+    /* Posts
+        .deleteComments(id)
+        .then( post => {
+            if( post.errmsg ){
+                res.statusMessage = "That id was not found in the list of posts";
+                return res.status( 404 ).end();
+            }
+                return res.status( 200 ).json( post );
+        })
+        .catch( err => {
+            res.statusMessage = "Something is wrong with the Database";
+            console.log("1 " + err);
+            return res.status( 500 ).end();
+        }); */
+    // then remove from likedPosts
+    /* Likes
+        .delLikedPostById(id)
+        .then( likedPost => {
+            if( likedPost.errmsg ){
+                res.statusMessage = "That id was not found in the list of posts";
+                return res.status( 404 ).end();
+            }
+                return res.status( 200 ).json( likedPost );
+        })
+        .catch( err => {
+            res.statusMessage = "Something is wrong with the Database";
+            console.log("2 " + err);
+            return res.status( 500 ).end();
+        }); */
+    // then delete post
+    Posts
+        .delPostById( id )
+        .then( post => {
+            if( post.errmsg ){
+                res.statusMessage = "That id was not found in the list of posts";
+                return res.status( 404 ).end();
+            }
+                return res.status( 200 ).json( post );
+        })
+        .catch( err => {
+            res.statusMessage = "Something is wrong with the Database";
+            return res.status( 500 ).end();
+        });
+});
+// PATCH Title of Post By id
+app.patch('/updatePost/:id', jsonParser, (req, res) => {
+    const {_id, title} = req.body;
+    const psid = req.params.id;
+    if(!_id){
+        res.statusMessage = "ID is not sent in the request";
+        return res.status( 406 ).end();
+    }
+    if(_id !== psid){
+        res.statusMessage = "Request ID doesnt match ID";
+        return res.status( 409 ).end();
+    }
+    Posts
+        .patchPostById(psid, title)
+        .then( post => {
+            if( post.errmsg ){
+                res.statusMessage = "No post for the ID requested";
+                return res.status( 404 ).end();
+            }
+                return res.status( 202 ).json( post );
+        })
+        .catch( err => {
+            console.log( err );
+            res.statusMessage = "Something is wrong with the database";
+            return res.status( 500 ).end();
+        })
 
+})
 //**************************Likes********************************
 // Get all likes by user
 app.get('/getLikesByUser/:userId', (req, res) => {
@@ -247,7 +323,6 @@ app.post('/newComment', jsonParser, (req, res) => {
             return c;
         })
         .then(cJson => {
-            console.log(cJson);
             Posts
                 .updateComments(postOid, cJson._id)
                 .then(updatedPost => {
@@ -278,7 +353,7 @@ app.get('/getCommentsByUserId/:userId', (req, res) => {
             return res.status( 500 ).end();
         });
 });
-
+// GET ALl Comments
 app.get('/getAllComments', (req, res) => {
     Comments
         .getAllComments()
@@ -290,7 +365,49 @@ app.get('/getAllComments', (req, res) => {
             return res.status( 500 ).end();
         })
 })
-
+// DELETE Comment by id
+app.delete('/deleteComment/:id', (req, res) => {
+    let id = req.params.id;
+    Comments
+        .delCommentById( id )
+        .then( comment => {
+            if(comment.errmsg ){
+                res.statusMessage = "That id was not found in the list of comments";
+                return res.status( 404 ).end();
+            }
+                return res.status( 200 ).json( comment );
+        })
+        .catch( err => {
+            res.statusMessage = "Something is wrong with the database";
+            return res.status( 500 ).end();
+        })
+});
+// Update comment by id  post <----> comment
+app.patch('/updateComment/:id', jsonParser, (req, res) => {
+    const {_id, content} = req.body;
+    const psid = req.params.id;
+    if(!_id){
+        res.statusMessage = "ID is not sent in request";
+        return res.status( 406 ).end();
+    }
+    if(_id !== psid){
+        res.statusMessage = "Request ID doesnt match ID";
+        return res.status( 409 ).end();
+    }
+    Comments
+        .patchCommentById( psid, content )
+        .then( comment => {
+            if( comment.errmsg ){
+                res.statusMessage = "No comment for ID requested";
+                return res.status( 404 ).end();
+            }
+                return res.status( 202 ).json( comment );
+        })
+        .catch( err => {
+            res.statusMessage = "Something is wrong with the database";
+            return res.status( 500 ).end();
+        })
+});
 
 app.listen( PORT, () => {
     console.log( `This server is running on port ${PORT}` );

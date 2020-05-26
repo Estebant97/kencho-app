@@ -54,7 +54,7 @@ const Likes = {
                 });
     }, 
     patchLikedById : function(id, uLiked){
-        return userModel
+        return likeModel
                 .findByIdAndUpdate({"_id": id}, {"liked": uLiked})
                 .then( likeUpdate => {
                     return likeUpdate;

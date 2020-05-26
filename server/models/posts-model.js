@@ -72,7 +72,8 @@ const Posts = {
             .catch( err => {
                 throw new Error( err.message );
             });
-    }, 
+    },
+    //esto es para updatear los comments del post!!!
     updateComments : function(idPost, idComment){
         return postModel
             .update({_id: idPost}, {$push: {comments: idComment}})
@@ -85,7 +86,7 @@ const Posts = {
     },
     delPostById : function( id ){
         return postModel
-                .findOneAndRemove({"_id" : id})
+                .findOneAndRemove({_id : id})
                 .then( post => {
                     return post;
                 })
@@ -94,15 +95,25 @@ const Posts = {
                 });
     }, 
     // solo se puede cambiar el titulo del post
-    patchUserById : function(id, uTitle){
-        return userModel
-                .findByIdAndUpdate({"_id": id}, {"title": uTitle, "image": uImage})
-                .then( userUpdate => {
-                    return userUpdate;
+    patchPostById : function(id, uTitle){
+        return postModel
+                .findByIdAndUpdate({"_id": id}, {"title": uTitle})
+                .then( postUpdate => {
+                    return postUpdate;
                 })
                 .catch(err => {
                     return err;
                 })  
+    },
+    deleteComments : function(idPost){
+        return postModel
+                .findOneAndUpdate({_id: idPost}, {"$pull" : {"comments" : null}})
+                .then(deletedComments => {
+                    return deletedComments;
+                })
+                .catch(err => {
+                    throw new Error(err.message);
+                })
     }
 }
 
