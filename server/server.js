@@ -11,12 +11,20 @@ const { Likes } = require('./models/likes-model');
 const { Posts } = require('./models/posts-model');
 const { Users } = require('./models/users-model');
 const {DATABASE_URL, PORT, SECRET_TOKEN} = require( './config' );
-//const cors = require( './middleware/cors' );
+const cors = require( './middleware/cors' );
 const app = express();
 //use
-app.use( express.static( "public" ) );
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+  
+    const path = require('path');
+    app.get('*', (req,res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+  
+}
 app.use( morgan( 'dev' ) );
-//app.use( cors );
+app.use( cors );
 
 
 //*****************************************************USERS*********************************************

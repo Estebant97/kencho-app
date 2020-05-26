@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowUp} from "@fortawesome/free-solid-svg-icons";
 import {faArrowDown} from "@fortawesome/free-solid-svg-icons";
 import {faCommentAlt} from "@fortawesome/free-regular-svg-icons";
+import fetchAPI from '../lib/request';
 //var Modal = ReactBootstrap.Modal;
 //import {corgi} from "../assets/corgi.png";
 
@@ -20,7 +21,22 @@ function like(){
 
 
 class Feed extends React.Component {
-  
+    componentDidMount(){
+        const settings = {
+            method: 'GET'
+        }
+        //check if its in production 
+        fetchAPI("/posts", settings)
+        .then( response => {
+            return response.json();
+        })
+        .then( data => {
+            console.log( data );
+        })
+        .catch( err => {
+            console.log(err);
+        })
+    }
     render() {
         return (
             <>

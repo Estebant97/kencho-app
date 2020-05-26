@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "./NavBar";
 
 class ActivityLog extends React.Component {
- 
 
     render() {
         //const { name, description, category, price } = this.state;
@@ -20,7 +19,8 @@ class ActivityLog extends React.Component {
                             </ul>
                            
                         </div>
-                    
+                        <div>
+                        </div>
                       
                     </div>
                 </div>
