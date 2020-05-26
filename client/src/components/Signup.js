@@ -1,27 +1,36 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
 
 class Signup extends React.Component {
+
     render () {
         return(
-            
-            <section className="overflow-hidden">
-                <div className="">
+            <>
+            <section
+                style={{
+                    height: '100vh',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    
+                }}>
+                <NavBar searchVisible={true}/>
+                <div className="container">
                     <div className="row">
-                        <div className="col-sm-6 text-center px-5" style={{color: 'white', fontWeight: 'bold', fontSize: 45}}>
-                           
-                        </div>
-                        <div className="col-sm-6">
-                            <div className="text-center"
+                        <div className="col-sm-12">
+                            <div className="mx-auto"
                                  style={{
+                                     marginTop: '10%',
                                      backgroundColor: 'white',
-                                     width: '80%',
-                                     height: '100vh',
-                                     marginLeft: '20%'
+                                     borderRadius: 10,
+                                     width: '35%',
+                                     height: '60vh',
+                                     textAlign: 'center'
                                  }}>
-                                <form>
+                                <form onSubmit={this.handleLogin}>
                                     <div className="py-5">
-                                        <h1 className="mb-5 my-5">Ingresa tus datos</h1>
+                                        <h1 className="mb-5">Registrate</h1>
                                         <div className="form-group">
                                             <input type="text" placeholder='Nombre de usuario' style={{width: '70%'}}/>
                                         </div>
@@ -34,22 +43,19 @@ class Signup extends React.Component {
                                         <div className="form-group">
                                             <input type="password" placeholder='Confirmar contraseña' style={{width: '70%'}}/>
                                         </div>
-
-                                        <button type="submit" className="btn mt-5"
-                                                style={{width: '40%', backgroundColor: '#03989e', color: 'white', fontSize: 20}}>
-                                            <b>Registrate</b>
+                                        <button type="submit" className="btn mt-5" style={{width: '45%', backgroundColor: '#03989e', color: 'white'}}>
+                                            <Link to="/feed" style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>Ok</Link>
                                         </button>
                                     </div>
                                 </form>
-                                <div style={{fontSize: 20, fontWeight: 'bold'}}>
-                                    <p>¿Ya eres usuario?</p>
-                                    <Link to="/" style={{color: '#03989e', textAlign: 'center'}}>Inicia Sesión</Link>
-                                </div>
+                                <h6 className="text-center">¿Ya eres usuario?</h6>
+                                <Link to="/" style={{color: '#03989e', fontWeight: 'bold', fontSize: 20}}>Inicia sesión</Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+            </>
         );
     }
 }
