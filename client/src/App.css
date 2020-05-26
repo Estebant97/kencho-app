@@ -57,18 +57,20 @@
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  margin-top: 30px;
 }
 /*Checar margins y paddings de elementos*/
 .arrowUp{
   color: #00e600;
-  margin-right: 20px;
+  margin-left:-50px ;
   
 }
 .arrowDown{
   color:red;
+  /*margin-right: 140px;*/
 }
 .comment{
   color:#03989e;
   /*checar el flexbox para hacerlo responsive*/
-  margin-left: 150px;
+  margin-left: 200px;
 }

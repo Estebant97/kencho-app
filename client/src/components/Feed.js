@@ -5,10 +5,22 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowUp} from "@fortawesome/free-solid-svg-icons";
 import {faArrowDown} from "@fortawesome/free-solid-svg-icons";
 import {faCommentAlt} from "@fortawesome/free-regular-svg-icons";
+//var Modal = ReactBootstrap.Modal;
 //import {corgi} from "../assets/corgi.png";
 
-class Feed extends React.Component {
+//Redirecciona al open post
+//Se le tienen que mandar los props del post para que cargue la img y comments
+function postToOpen(){
+    window.location.href='/open-post';
+}
+//likedPost = true, agregarlo a los post likeados del usuario
+function like(){
+    alert('agregado a post likeados');
+}
 
+
+class Feed extends React.Component {
+  
     render() {
         return (
             <>
@@ -19,8 +31,9 @@ class Feed extends React.Component {
                             <h1 className="my-5">Memes Kencho</h1>
                             </div>
                             <span>
-                            <Button variant="success" style={{ height: 80, marginTop: 30 }}>Agregar meme</Button>{' '}
+                            <Button variant="success" style={{ height: 80, marginTop: 30 }} >Agregar meme</Button>
                             </span>
+                            
 
                         </div>
                         <div className="imagesFeed">
@@ -28,20 +41,20 @@ class Feed extends React.Component {
                                    <p>@username</p>
                                <br>
                                </br>
-                                   <img className="images"src={require('../assets/corgi.png')} alt="Corgi"/>
-                                   <p>Caption del meme</p>
-                                   <br>
-                                    </br>
+                                   <img className="images"src={require('../assets/corgi.png')} alt="Corgi" onClick={postToOpen}/>
+                                    <p>Caption del meme</p>
+                                    <br>
+                                     </br>
                                    <div>
                                        <span>
-                                   <FontAwesomeIcon icon={faArrowUp} size='4x' className="arrowUp">
+                                   <FontAwesomeIcon icon={faArrowUp} size='4x' className="arrowUp" onClick={like}>
                                    </FontAwesomeIcon>
                                    
                                 
                                    <FontAwesomeIcon icon={faArrowDown} size='4x' className="arrowDown">
                                    </FontAwesomeIcon>
                                   
-                                    <span className="commentBox">
+                                    <span className="commentBox" onClick={postToOpen}>
                                    <FontAwesomeIcon icon={faCommentAlt} size='4x' className="comment">
                                    </FontAwesomeIcon>
                                    </span>
@@ -53,7 +66,7 @@ class Feed extends React.Component {
                                <div className="borderImage">
                                <br>
                                </br>
-                                   <img className="images"src={require('../assets/golden.jpg')} alt="Corgi"/>
+                                   <img className="images"src={require('../assets/golden.jpg')} alt="Corgi" onClick={postToOpen}/>
                                    <p>Caption del meme</p>
                                    <br>
                                     </br>
@@ -66,7 +79,7 @@ class Feed extends React.Component {
                                    <FontAwesomeIcon icon={faArrowDown} size='4x' className="arrowDown">
                                    </FontAwesomeIcon>
                                   
-                                    <span className="commentBox">
+                                    <span className="commentBox" onClick={postToOpen}>
                                    <FontAwesomeIcon icon={faCommentAlt} size='4x' className="comment">
                                    </FontAwesomeIcon>
                                    </span>
