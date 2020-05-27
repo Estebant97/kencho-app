@@ -18,9 +18,21 @@ function postToOpen(){
 function like(){
     alert('agregado a post likeados');
 }
+function unlike(){
+    alert('eliminado de post likeados');
+}
 
 
 class Feed extends React.Component {
+
+    constructor(props) {
+        super(props);
+     
+        this.state = {
+          posts:[],
+        };
+        console.log(this.state);
+      }
     componentDidMount(){
         const settings = {
             method: 'GET'
@@ -31,83 +43,57 @@ class Feed extends React.Component {
             return response.json();
         })
         .then( data => {
+            
+            this.setState({posts:data});
             console.log( data );
+            console.log(this.state);
         })
         .catch( err => {
             console.log(err);
         })
     }
+
+
     render() {
+        const {posts}=this.state;
+        console.log("entro al render");
+        //console.log(posts);
         return (
             <>
                 <Navbar></Navbar>
-                <div className="container">
-                    <div className="row">
+                <div className="row">
                         <div className="col-sm-9 ml-5">
                             <h1 className="my-5">Memes Kencho</h1>
-                            </div>
-                            <span>
-                            <Button variant="success" style={{ height: 80, marginTop: 30 }} >Agregar meme</Button>
-                            </span>
-                            
-
                         </div>
-                        <div className="imagesFeed">
-                               <div className="borderImage">
-                                   <p>@username</p>
-                               <br>
-                               </br>
-                                   <img className="images"src={require('../assets/corgi.png')} alt="Corgi" onClick={postToOpen}/>
-                                    <p>Caption del meme</p>
-                                    <br>
-                                     </br>
-                                   <div>
-                                       <span>
-                                   <FontAwesomeIcon icon={faArrowUp} size='4x' className="arrowUp" onClick={like}>
-                                   </FontAwesomeIcon>
-                                   
-                                
-                                   <FontAwesomeIcon icon={faArrowDown} size='4x' className="arrowDown">
-                                   </FontAwesomeIcon>
-                                  
-                                    <span className="commentBox" onClick={postToOpen}>
-                                   <FontAwesomeIcon icon={faCommentAlt} size='4x' className="comment">
-                                   </FontAwesomeIcon>
-                                   </span>
-                                   </span>
-                               </div>
-                               </div>
-                               <br>
-                               </br>
-                               <div className="borderImage">
-                               <br>
-                               </br>
-                                   <img className="images"src={require('../assets/golden.jpg')} alt="Corgi" onClick={postToOpen}/>
-                                   <p>Caption del meme</p>
-                                   <br>
-                                    </br>
-                                   <div>
-                                       <span>
-                                   <FontAwesomeIcon icon={faArrowUp} size='4x' className="arrowUp">
-                                   </FontAwesomeIcon>
-                                   
-                                
-                                   <FontAwesomeIcon icon={faArrowDown} size='4x' className="arrowDown">
-                                   </FontAwesomeIcon>
-                                  
-                                    <span className="commentBox" onClick={postToOpen}>
-                                   <FontAwesomeIcon icon={faCommentAlt} size='4x' className="comment">
-                                   </FontAwesomeIcon>
-                                   </span>
-                                   </span>
-                               </div>
-                               </div>
-                               
-                           </div>
-                    </div>
+                            <span>
+                                <Button variant="success" style={{ height: 80, marginTop: 30 }} >Agregar meme</Button>
+                            </span>
+                                <div className="imagesFeed">
+                                     <div >
+                                        {posts.map(post=>
+                                        <div className="borderImage">
+                                            <img  className="images" src={post.image} onClick={postToOpen}/>
+                                                <p>{post.title}</p>
+                                                     <span>
+                                                        <FontAwesomeIcon icon={faArrowUp} size='3x' className="arrowUp" onClick={like}>
+                                                        </FontAwesomeIcon>
+                                                        <FontAwesomeIcon icon={faArrowDown} size='3x' className="arrowDown"  onClick={unlike}>
+                                                        </FontAwesomeIcon>
+                                                            <span className="commentBox" onClick={postToOpen}>
+                                                                <FontAwesomeIcon icon={faCommentAlt} size='3x' className="comment">
+                                                                </FontAwesomeIcon>
+                                                             </span>
+                                                    </span>
+                                         </div>
+                                        )}  
+                                </div>
+                        </div>
+
+                </div>
                 
             </>
         );
     }
+
 }
 export default Feed;
