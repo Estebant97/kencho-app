@@ -23,7 +23,7 @@ function App() {
                       <Route path="/signup" component={Signup}/>
                       <Route path="/liked-posts" component={LikedPosts}/>
                       <Route path="/activity-log" component={ActivityLog}/>
-                      <Route path="/open-post" component={OpenPost}/>
+                      <Route path="/open-post/:id" component={OpenPost} />
                       <Route path="/" component={Login}/>
                   </Switch>
               </Router>

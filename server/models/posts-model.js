@@ -50,7 +50,7 @@ const Posts = {
     getPostById : function( id ){
         return postModel
                 .find( {_id: id})
-                .populate( 'comments', ['content'] )
+                .populate( 'comments', ['content','userOid'] )
                 .populate( 'userOid', ['username'] )
                 //checar este populate que si funciona pero no se si mostrara todos los usuarios
                 //preguntar como mostrar el username tambien por cada comment

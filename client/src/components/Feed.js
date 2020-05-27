@@ -6,14 +6,22 @@ import {faArrowUp} from "@fortawesome/free-solid-svg-icons";
 import {faArrowDown} from "@fortawesome/free-solid-svg-icons";
 import {faCommentAlt} from "@fortawesome/free-regular-svg-icons";
 import fetchAPI from '../lib/request';
+//import { withRouter } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 //var Modal = ReactBootstrap.Modal;
 //import {corgi} from "../assets/corgi.png";
 
 //Redirecciona al open post
 //Se le tienen que mandar los props del post para que cargue la img y comments
+
+/*
 function postToOpen(){
+    //this.props.history.push("/open-post");
     window.location.href='/open-post';
 }
+
+*/
+
 //likedPost = true, agregarlo a los post likeados del usuario
 function like(){
     alert('agregado a post likeados');
@@ -33,6 +41,11 @@ class Feed extends React.Component {
         };
         console.log(this.state);
       }
+
+      onClick =(id) => {
+        this.props.history.push(`/open-post/${id}`);
+      }
+     
     componentDidMount(){
         const settings = {
             method: 'GET'
@@ -72,18 +85,22 @@ class Feed extends React.Component {
                                      <div >
                                         {posts.map(post=>
                                         <div className="borderImage">
-                                            <img  className="images" src={post.image} onClick={postToOpen}/>
-                                                <p>{post.title}</p>
-                                                     <span>
-                                                        <FontAwesomeIcon icon={faArrowUp} size='3x' className="arrowUp" onClick={like}>
-                                                        </FontAwesomeIcon>
-                                                        <FontAwesomeIcon icon={faArrowDown} size='3x' className="arrowDown"  onClick={unlike}>
-                                                        </FontAwesomeIcon>
-                                                            <span className="commentBox" onClick={postToOpen}>
-                                                                <FontAwesomeIcon icon={faCommentAlt} size='3x' className="comment">
-                                                                </FontAwesomeIcon>
-                                                             </span>
-                                                    </span>
+                                            <div>
+                                                {post.userOid.username}
+                                             </div>
+                                                <img  className="images" src={post.image} onClick={()=>this.onClick(post._id)} alt="meme"/>
+                                                    <p>{post.title}</p>
+                                                        <span>
+                                                            <FontAwesomeIcon icon={faArrowUp} size='3x' className="arrowUp" onClick={like}>
+                                                            </FontAwesomeIcon>
+                                                            <FontAwesomeIcon icon={faArrowDown} size='3x' className="arrowDown"  onClick={unlike}>
+                                                            </FontAwesomeIcon>
+                                                                <span className="commentBox" onClick={()=>this.onClick(post._id)} >
+                                                                    <FontAwesomeIcon icon={faCommentAlt} size='3x' className="comment">
+                                                                    </FontAwesomeIcon>
+                                                                </span>
+                                                        </span>
+                                                        
                                          </div>
                                         )}  
                                 </div>
