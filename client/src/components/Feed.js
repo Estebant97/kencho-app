@@ -34,6 +34,9 @@ class Feed extends React.Component {
         console.log(this.state);
       }
     componentDidMount(){
+        if(!localStorage.getItem("accessToken")){
+            this.props.history.push("/login")
+        }
         const settings = {
             method: 'GET'
         }

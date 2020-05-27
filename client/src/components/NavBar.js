@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 import { Navbar, Nav } from "react-bootstrap";
 
 const NavBar = ({searchVisible}) => (
@@ -9,9 +10,10 @@ const NavBar = ({searchVisible}) => (
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/liked-posts">Mis Likes</Nav.Link>
-                        <Nav.Link href="/activity-log">Mi Actividad</Nav.Link>
-                        <Nav.Link href="/">Cerrar Sesión</Nav.Link>
+                        <Nav.Link as={Link} to="/liked-posts">Mis Likes</Nav.Link>
+                        <Nav.Link as={Link} to="/activity-log">Mi Actividad</Nav.Link>
+                        <Nav.Link as={Link}to="/add-post">Añadir Meme</Nav.Link>
+                        <Nav.Link as={Link} to="/">Cerrar Sesión</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </div>

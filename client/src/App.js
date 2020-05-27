@@ -6,6 +6,7 @@ import LikedPosts from './components/LikedPosts';
 import ActivityLog from './components/ActivityLog';
 import OpenPost from './components/OpenPost'
 import Feed from './components/Feed';
+import AddPost from './components/AddPost';
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,6 +25,7 @@ function App() {
                       <Route path="/liked-posts" component={LikedPosts}/>
                       <Route path="/activity-log" component={ActivityLog}/>
                       <Route path="/open-post" component={OpenPost}/>
+                      <Route path="/add-post" component = {AddPost}/>
                       <Route path="/" component={Login}/>
                   </Switch>
               </Router>
