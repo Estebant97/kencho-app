@@ -6,6 +6,7 @@ import LikedPosts from './components/LikedPosts';
 import ActivityLog from './components/ActivityLog';
 import OpenPost from './components/OpenPost'
 import Feed from './components/Feed';
+import AddPost from './components/AddPost';
 import {
   BrowserRouter as Router,
   Switch,
