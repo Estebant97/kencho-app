@@ -119,6 +119,21 @@ app.post('/users/register', jsonParser, (req, res) => {
             });
         });
 });
+/*
+//GET DATA FROM SPECIFIC USER
+app.get('/user/:id',(req,res)=>{
+    let id=req.params.userOid;
+    Users
+    .getUserById(id)
+    .then(user=>{
+        return res.status(200).json(user);
+    })
+    .catch( err => {
+        res.statusMessage = err.message;
+        return res.status( 500 ).end();
+    });
+})
+*/
 //*****************************************POSTS*****************************************
 //GET ALL POSTS
 app.get( '/posts', ( req, res ) => {
@@ -143,9 +158,16 @@ app.get('/postsById/:postId',(req,res) => {
     Posts
         .getPostById(id)
         .then(post=> {
+            
+            console.log(post);
             return res.status( 200 ).json( post );
-            //CHECAR SOBRE LOS COMENTARIOS DE CADA POST
         }) 
+       
+       
+           
+            //CHECAR SOBRE LOS COMENTARIOS DE CADA POST
+    
+       
         .catch( err => {
             res.statusMessage = err.message;
             return res.status( 500 ).end();

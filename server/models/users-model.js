@@ -52,6 +52,16 @@ const Users = {
                     throw new Error(err.message);
                 });
     },
+    getUserById: function(id){
+        return userModel
+            .findOne({"_id":id})
+            .then(user=>{
+                return user;
+            })
+            .catch(err=>{
+                throw new Error(err.message);
+            })
+    },
     // delete user by id
     delUserById : function(id){
         return userModel

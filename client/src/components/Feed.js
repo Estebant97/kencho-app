@@ -23,9 +23,7 @@ function postToOpen(){
 */
 
 //likedPost = true, agregarlo a los post likeados del usuario
-function like(){
-    alert('agregado a post likeados');
-}
+
 function unlike(){
     alert('eliminado de post likeados');
 }
@@ -35,12 +33,16 @@ class Feed extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
      
         this.state = {
           posts:[],
         };
         console.log(this.state);
       }
+      //funcion cuando le pican like 
+      //checar parametros recibidos
+      
 
       onClick =(id) => {
         this.props.history.push(`/open-post/${id}`);
@@ -73,7 +75,8 @@ class Feed extends React.Component {
     render() {
         const {posts}=this.state;
         console.log("entro al render");
-        //console.log(posts);
+        console.log(posts);
+       
         return (
             <>
                 <Navbar></Navbar>
@@ -93,16 +96,13 @@ class Feed extends React.Component {
                                              </div>
                                                 <img  className="images" src={post.image} onClick={()=>this.onClick(post._id)} alt="meme"/>
                                                     <p>{post.title}</p>
-                                                        <span>
-                                                            <FontAwesomeIcon icon={faArrowUp} size='3x' className="arrowUp" onClick={like}>
-                                                            </FontAwesomeIcon>
-                                                            <FontAwesomeIcon icon={faArrowDown} size='3x' className="arrowDown"  onClick={unlike}>
-                                                            </FontAwesomeIcon>
+                                                        
+                                                        
                                                                 <span className="commentBox" onClick={()=>this.onClick(post._id)} >
                                                                     <FontAwesomeIcon icon={faCommentAlt} size='3x' className="comment">
                                                                     </FontAwesomeIcon>
                                                                 </span>
-                                                        </span>
+                                                    
                                                         
                                          </div>
                                         )}  
