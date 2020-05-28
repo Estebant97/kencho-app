@@ -84,9 +84,11 @@ class Feed extends React.Component {
                         <div className="col-sm-9 ml-5">
                             <h1 className="my-5">Memes Kencho</h1>
                         </div>
-                            <span>
-                                <Button variant="success" style={{ height: 80, marginTop: 30 }} >Agregar meme</Button>
-                            </span>
+                            <div className="card text-white bg-dark mb-3" style={{maxWidth : "18rem", maxHeight: "5rem"}}>
+                                    <div className="card-body">
+                                        <h5 className="card-title">@Username</h5>
+                                    </div>  
+                                </div>
                                 <div className="imagesFeed">
                                      <div >
                                         {posts.map(post=>

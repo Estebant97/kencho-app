@@ -139,8 +139,8 @@ app.get('/user/:id',(req,res)=>{
 app.get( '/posts', ( req, res ) => {
     let header = req.headers.authorization.split(' ')[1];
     console.log(header);
-    let {userOid} = jwt.decode(header);
-    console.log(userOid);
+    let {username} = jwt.decode(header);
+    console.log(username);
     Posts
         .getAllPosts()
         .then( posts => {
@@ -214,8 +214,8 @@ app.post('/newPost',jsonParser,(req,res)=>{
     // tener una funcion getUserById --> si esa funcion retorna existosamente hacer el create del post
     // si no retornar un
     let header = req.headers.authorization.split(' ')[1];
-    let {decoded} = jwt.decode(header);
-    console.log(decoded.userOid);
+    let {userOid} = jwt.decode(header);
+    console.log(userOid);
     const {title,image,comments} = req.body;
     if( !title||!image ||!userOid ){
         res.statusMessage = "One of these parameters is missing in the request";
