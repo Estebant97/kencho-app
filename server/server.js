@@ -122,6 +122,10 @@ app.post('/users/register', jsonParser, (req, res) => {
 //*****************************************POSTS*****************************************
 //GET ALL POSTS
 app.get( '/posts', ( req, res ) => {
+    let header = req.headers.authorization.split(' ')[1];
+    console.log(header);
+    let {userOid} = jwt.decode(header);
+    console.log(userOid);
     Posts
         .getAllPosts()
         .then( posts => {
@@ -187,7 +191,10 @@ app.post('/newPost',jsonParser,(req,res)=>{
     //const id = req.params._id;
     // tener una funcion getUserById --> si esa funcion retorna existosamente hacer el create del post
     // si no retornar un
-    const {title,image,comments,userOid} = req.body;
+    let header = req.headers.authorization.split(' ')[1];
+    let {decoded} = jwt.decode(header);
+    console.log(decoded.userOid);
+    const {title,image,comments} = req.body;
     if( !title||!image ||!userOid ){
         res.statusMessage = "One of these parameters is missing in the request";
         return res.status( 406 ).end();
