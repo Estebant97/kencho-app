@@ -6,6 +6,7 @@ import {faArrowUp} from "@fortawesome/free-solid-svg-icons";
 import {faArrowDown} from "@fortawesome/free-solid-svg-icons";
 import {faCommentAlt} from "@fortawesome/free-regular-svg-icons";
 import fetchAPI from '../lib/request';
+import { access } from "fs";
 //import { withRouter } from "react-router-dom";
 //import { useHistory } from "react-router-dom";
 //var Modal = ReactBootstrap.Modal;
@@ -52,8 +53,12 @@ class Feed extends React.Component {
         if(!localStorage.getItem("accessToken")){
             this.props.history.push("/login")
         }
+        const accessToken = localStorage.getItem("accessToken");
         const settings = {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
         }
         //check if its in production 
         fetchAPI("/posts", settings)
@@ -61,7 +66,6 @@ class Feed extends React.Component {
             return response.json();
         })
         .then( data => {
-            
             this.setState({posts:data});
             console.log( data );
             console.log(this.state);

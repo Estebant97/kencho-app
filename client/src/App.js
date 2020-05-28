@@ -25,6 +25,7 @@ function App() {
                       <Route path="/liked-posts" component={LikedPosts}/>
                       <Route path="/activity-log" component={ActivityLog}/>
                       <Route path="/open-post/:id" component={OpenPost} />
+                      <Route path="/add-post" component={AddPost} />
                       <Route path="/" component={Login}/>
                   </Switch>
               </Router>
