@@ -25,10 +25,6 @@ function postToOpen(){
 
 //likedPost = true, agregarlo a los post likeados del usuario
 
-function unlike(){
-    alert('eliminado de post likeados');
-}
-
 
 class Feed extends React.Component {
 

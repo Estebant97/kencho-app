@@ -375,13 +375,17 @@ app.post('/newComment', jsonParser, (req, res) => {
 });
 
 app.get('/getCommentsByUserId/:userId', (req, res) => {
-    const id = req.params.userId;
-    if( !id ){
+    let header = req.headers.authorization.split(' ')[1];
+    console.log(header);
+    let {userOid} = jwt.decode(header);
+    console.log(userOid);
+    //const id = req.params.userId;
+    if( !userOid ){
         res.statusMessage = "id not sent as params";
         return res.status(406).end(); 
     }
     Comments
-        .getAllCommentsByUserId(id)
+        .getAllCommentsByUserId(userOid)
         .then(comments=>{
             return res.status( 200 ).json( comments );
         })

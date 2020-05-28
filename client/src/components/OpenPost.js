@@ -7,7 +7,6 @@ import {faArrowUp} from "@fortawesome/free-solid-svg-icons";
 import {faArrowDown} from "@fortawesome/free-solid-svg-icons";
 
 
-
 function like(){
     alert('agregado a post likeados');
     
