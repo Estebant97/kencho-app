@@ -44,7 +44,7 @@ class OpenPost extends React.Component {
      
         this.state = {
           post:[],
-          commenter:[],
+          //commenter:[],
           
         };
     
@@ -106,25 +106,36 @@ class OpenPost extends React.Component {
     }
    
     //SUBMIT DEL FORM CON COMENTARIO
-    /*
+    
       handleSubmit=(event)=>{
-        
+         
         event.preventDefault();
-        console.log(event.currentTarget.userComment.value);
-        const newComment= event.currentTarget.userComment.value;
-        const data={
-            content:newComment,
-            //userOid:,
-            //checar que regresa post.postOid
-            postOid:post.postOid
+        console.log("entro al submit");
+        //console.log(event.currentTarget.userComment.value);
+        const newComment= document.getElementById('comment').value;
+        console.log(newComment);
+
+        if(!localStorage.getItem("accessToken")){
+            this.props.history.push("/login")
         }
-        const settings={
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        const userId=accessToken.userOid;
+        console.log(this.props.match.params.id);
+        const data = {
+            content : newComment,
+            postOid :this.state._id,
+            userOid:userId
+        }
+        const settings = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`
             },
             body : JSON.stringify( data )
         }
+        
         
         fetchAPI('/newComment',settings)
         .then(response=>{
@@ -132,12 +143,13 @@ class OpenPost extends React.Component {
         })
 
 
-      }
+    }
         
-      */
+      
     render() {
         const {post}=this.state;
         console.log(post);
+       console.log(post._id);
         return (
             <>
                 <Navbar></Navbar>
@@ -150,7 +162,7 @@ class OpenPost extends React.Component {
                                 <img  className="images" src={post.image} alt={post.title}/>
                                         <p>{post.title}</p>
                                             <span>
-                                            {/*<FontAwesomeIcon icon={faArrowUp} size='3x' className="arrowUp" onClick={()=>this.like(post.postOid)}>*/}
+                                            {/*<FontAwesomeIcon icon={faArrowUp} size='3x' className="arrowUp" onClick={()=>this.like(post._id)}>*/}
                                                 <FontAwesomeIcon icon={faArrowUp} size='3x' className="arrowUp" >
                                                 </FontAwesomeIcon>
                                                     <FontAwesomeIcon icon={faArrowDown} size='3x' className="arrowDown"  onClick={unlike}>
@@ -158,8 +170,8 @@ class OpenPost extends React.Component {
                                                                     
                                             </span>
                                                 <div>
-                                                    <form onSubmit={this.handleSubmit}>
-                                                        <textarea name="userComment"/>
+                                                    <form onSubmit={(event)=>this.handleSubmit(post._id,event)}>
+                                                        <textarea name="userComment" id="comment"/>
                                                             <div>
                                                                 <input type="submit" value="Submit" />
                                                             </div>
