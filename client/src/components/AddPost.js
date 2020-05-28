@@ -8,6 +8,11 @@ import fetchAPI from "../lib/request";
 
 class AddPost extends React.Component {
     // si se pone el component did mount va arriba
+    componentDidMount() {
+        if(!localStorage.getItem("accessToken")){
+            this.props.history.push("/login")
+        }
+    }
     handleUpload = (event) => {
         // recibir el value del title y la imagen
         event.preventDefault();
@@ -30,9 +35,10 @@ class AddPost extends React.Component {
                     image += rawLog[i];
                 }
                 let data = {
-                    title: 'prueba',
+                    title: title,
                     image: image
                 };
+                //API call to imgur
                 const settings = {
                     method: 'POST',
                     headers: {
@@ -41,33 +47,39 @@ class AddPost extends React.Component {
                     },
                     body : JSON.stringify( data )
                 };
-                //check if its in production 
-                //const imageHash = 'lWoC4Co';
                 fetch("https://api.imgur.com/3/image", settings)
                 .then( response => {
                         return response.json();
                 })
                 .then( responseJson => {
                     const accessToken = localStorage.getItem("accessToken");
-                    console.log("accessToken");
+                    console.log(responseJson);
+                    let alert = document.querySelector('.result');
                     const data = {
                         title : title,
-                        image : image
-                        // username
+                        image : responseJson.data.link
                     }
                     const settings = {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${accessToken}`
                         },
-                        Authorization: `Bearer ${accessToken}`,
                         body : JSON.stringify( data )
                     };
-                    //this.setState({posts:data});
-                    console.log( responseJson );
 
                     fetchAPI('/newPost', settings)
-
+                    .then( response => {
+                        return response.json();
+                    })
+                    .then( login => {
+                        alert.innerHTML += `<div class="alert alert-success" role="alert">
+                                            El post se ha realizado correctamente
+                                            </div>`;
+                    })
+                    .catch( err => {
+                        console.log(err);
+                    })
                     // si se realiza correctamente hacer una funcion que reciba como parametro el user, el title y la url de la imagen
                     // tomar el username del accessToken
                     //handlePost(username, title, image)
@@ -84,19 +96,22 @@ class AddPost extends React.Component {
         return (
             <>
                 <Navbar></Navbar>
+                <div className="result">
+
+                </div>
                 <div className="container">
                     <div className="row">
                         <div className="mt-5 py-3">
                             <form onSubmit={this.handleUpload}>
                                 <div className="form-group">
                                     <label htmlFor="title">Titulo</label>
-                                    <textarea className="form-control" id="title" rows="3"></textarea>
+                                    <textarea className="form-control" id="title" rows="3" required></textarea>
                                 </div>
                                 <div className="form-group">
                                 <label htmlFor="image">
                                     Imagen
                                 </label>
-                                <input type="file" className="form-control-file" id="image"></input>
+                                <input type="file" className="form-control-file" id="image" required></input>
                                 </div>
                                 <button type="submit" className="btn mt-5" style={{width: '45%', backgroundColor: '#03989e', color: 'white'}}>
                                     Subir meme
