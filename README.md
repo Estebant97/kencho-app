@@ -1,12 +1,10 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Kencho
 
 Kencho es una divertida aplicación web enfocada en compartir memes en español. 
 
 ### ¿Cómo unirte a Kencho?
 
-Para comenzar a utilizarlo, deberás registrarte en :
+Para comenzar a utilizarlo, deberás registrarte en :https://kencho-client.now.sh/
 
 Una vez registrado, haz click en iniciar sesión.
 
@@ -19,7 +17,6 @@ En el Feed principal, podrás ver todos los memes compartidos por los usuarios d
 Para abrir un post deberás hacer click en la imagen del meme, o bien hacer click en el ícono de comentario.
 Aquí podrás también ponerle like (flecha hacia arriba) o eliminarlo de tus likes (flecha hacia abajo).
 Para comentar, deja tu mensaje en el cuadro de texto y haz click en comentar.
-
 
 
 ### Añadir Meme
@@ -40,3 +37,15 @@ Aquí encontraras todos los posts a los cuales le hayas dado like.
 
 ### Cerrar sesión
 En caso de hacer click en "Cerrar sesión" será indispensable volver a iniciar sesión para poder seguir utilizando Kencho.
+
+
+
+## Tecnologías Utilizadas
+MERN Stack
+Api imgur
+Hosting Cliente: Vercel
+Hosting Servidor: Heroku
+Almacenamiento de base de datos: Atlas DB
+
+Esteban Torres Alarcón   A01193925
+Martha Arnaud Pacheco    A01410560
