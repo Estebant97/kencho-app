@@ -42,10 +42,14 @@ En caso de hacer click en "Cerrar sesión" será indispensable volver a iniciar 
 
 ## Tecnologías Utilizadas
 MERN Stack
+```
 Api imgur
 Hosting Cliente: Vercel
 Hosting Servidor: Heroku
 Almacenamiento de base de datos: Atlas DB
+```
 
+```
 Esteban Torres Alarcón   A01193925
 Martha Arnaud Pacheco    A01410560
+```
