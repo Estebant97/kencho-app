@@ -1,69 +1,42 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Kencho
 
-In the project directory, you can run:
+Kencho es una divertida aplicación web enfocada en compartir memes en español. 
 
-### `npm start`
+### ¿Cómo unirte a Kencho?
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para comenzar a utilizarlo, deberás registrarte en :
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Una vez registrado, haz click en iniciar sesión.
 
-### `npm test`
+### Feed
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+En el Feed principal, podrás ver todos los memes compartidos por los usuarios de Kencho.
 
-### `npm run build`
+### Abrir post
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para abrir un post deberás hacer click en la imagen del meme, o bien hacer click en el ícono de comentario.
+Aquí podrás también ponerle like (flecha hacia arriba) o eliminarlo de tus likes (flecha hacia abajo).
+Para comentar, deja tu mensaje en el cuadro de texto y haz click en comentar.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Añadir Meme
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Para publicar un meme, haz click en la pestaña "Añadir Meme", a continuación deja un título y carga tu imagen seleccionándola desde tus archivos. Por último haz click en Subir Meme.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Mis Posts
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Encontrarás todos los posts que haz publicado, así como la opción de modificar el título de ese post o eliminarlo por completo.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Mi Actividad
 
-## Learn More
+Encontrarás todos los comentarios que haz realizado en algún post con la opción de eliminarlo. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Mis Likes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Aquí encontraras todos los posts a los cuales le hayas dado like. 
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# kencho-app
+### Cerrar sesión
+En caso de hacer click en "Cerrar sesión" será indispensable volver a iniciar sesión para poder seguir utilizando Kencho.
