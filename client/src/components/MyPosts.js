@@ -1,46 +1,28 @@
 import React from "react";
 import Navbar from "./NavBar";
-import { Button } from 'react-bootstrap';
-import {Modal} from 'react-bootstrap';
+import { Button,Modal,ButtonToolbar } from 'react-bootstrap';
+import DeletePost from "./DeletePost";
+import EditCaption from "./EditCaption";
 import fetchAPI from '../lib/request';
 
 
-function clickEdit(){
-    alert('editar comment');
-}
 
  class MyPosts extends React.Component{
+
     constructor(props) {
         super(props);
         console.log(props);
-     
-        this.state = {
-        posts:[],
-        };
-        console.log(this.state);
-      }
-      //Delete post when clicking delete button
-      //Hacer confirmación antes de picarle borrar
-      //Darle refresh para que ya no salga
-      onDeleteClick=(id)=>{
-          console.log(id);
-          
-        const settings = {
-            method: 'DELETE',
-        }
-        fetchAPI(`/deletePost/${id}`,settings)
-        .then(response=>{
-            response.json();
-            console.log(response);
-        })
-        .catch( err => {
-            console.log(err);
-        })
-
        
 
-    }
-  
+        this.state = {
+        posts:[],deletePostModalShow:false,editCaptionModalShow:false,
+        }
+       
+        console.log(this.state);
+      }
+
+
+    
       componentDidMount(){
         if(!localStorage.getItem("accessToken")){
             this.props.history.push("/login")
@@ -70,13 +52,44 @@ function clickEdit(){
             console.log(err);
         })
       }
+
+
+
+      
+      
+      
+     
+      //Delete post when clicking delete button
+      //Hacer confirmación antes de picarle borrar
+      //Darle refresh para que ya no salga
+      onDeleteClick=(id)=>{
+          console.log(id);
+          
+        const settings = {
+            method: 'DELETE',
+        }
+        fetchAPI(`/deletePost/${id}`,settings)
+        .then(response=>{
+            response.json();
+            console.log(response);
+        })
+        .catch( err => {
+            console.log(err);
+        })
+
+       
+
+    }
+  
+      
       
       
       
       render(){
 
           const {posts}=this.state;
-  
+        let deletePostModalClose=()=>this.setState({deletePostModalShow:false});
+        let editCaptionModalClose=()=>this.setState({editCaptionModalShow:false});
           return (
             <>
                 <Navbar></Navbar>
@@ -88,8 +101,15 @@ function clickEdit(){
                             </div>
                                 <img  className="images" src={post.image} alt={post.title}/>
                                         <p>{post.title}</p>
-                                        <Button variant="secondary" onClick={clickEdit}>Editar pie de foto</Button>
-                                        <Button variant="danger" onClick={() => this.onDeleteClick(post._id)}>Eliminar Post</Button> 
+                                        <Button variant="secondary" onClick={()=>this.setState({editCaptionModalShow:true})}>Editar pie de foto</Button>
+                                        {/*<Button variant="danger" onClick={() => this.onDeleteClick(post._id)}>Eliminar Post</Button>*/}
+                                        <Button variant="danger" onClick={()=>this.setState({deletePostModalShow:true})}>Eliminar post</Button>
+                                        <DeletePost
+                                        show={this.state.deletePostModalShow}
+                                        onHide={deletePostModalClose}/>
+                                        <EditCaption
+                                        show={this.state.editCaptionModalShow}
+                                        onHide={editCaptionModalClose}/>
                         </div>
                     )}
 
