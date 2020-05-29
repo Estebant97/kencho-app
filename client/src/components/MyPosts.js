@@ -130,7 +130,7 @@ import fetchAPI from '../lib/request';
                             </div>
                                 <img  className="images" src={post.image} alt={post.title}/>
                                         <p>{post.title}</p>
-                                        <Button variant="secondary" onClick={()=>this.setState({editCaptionModalShow:true})}>Editar título del meme</Button>
+                                        <Button variant="secondary" onClick={()=>this.setState({editCaptionModalShow:true})} id="editCaption">Editar título del meme</Button>
                                         {/*<Button variant="danger" onClick={() => this.onDeleteClick(post._id)}>Eliminar Post</Button>*/}
                                         <Button variant="danger" onClick={()=>this.setState({deletePostModalShow:true})}>Eliminar post</Button>
                                             <Modal  show={this.state.deletePostModalShow}
