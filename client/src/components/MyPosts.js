@@ -71,6 +71,9 @@ import fetchAPI from '../lib/request';
             response.json();
             console.log(response);
         })
+        .then( del => {
+            window.location.reload();
+        })
         .catch( err => {
             console.log(err);
         })
@@ -97,6 +100,7 @@ import fetchAPI from '../lib/request';
                             return response.json();
                         })
                         .then( update => {
+                            window.location.reload();
                             alert.innerHTML += `<div class="alert alert-success" role="alert">
                                                 El título del post se ha actualizado correctamente
                                                 </div>`;
