@@ -50,6 +50,7 @@ class Feed extends React.Component {
             this.props.history.push("/login")
         }
         const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken.username);
         const settings = {
             method: 'GET',
             headers: {
@@ -73,20 +74,24 @@ class Feed extends React.Component {
 
 
     render() {
+        const accessToken = localStorage.getItem("accessToken");
+        const userId=accessToken.userOid;
+        console.log(userId);
         const {posts}=this.state;
         console.log("entro al render");
         console.log(posts);
+       
        
         return (
             <>
                 <Navbar></Navbar>
                 <div className="row">
                         <div className="col-sm-9 ml-5">
-                            <h1 className="my-5">Memes Kencho</h1>
+                            <h1 className="my-5" id="feedTitle">Memes Kencho</h1>
                         </div>
-                            <div className="card text-white bg-dark mb-3" style={{maxWidth : "18rem", maxHeight: "5rem"}}>
+                            <div className="card text-white bg-dark mb-3" id="usernameCard"style={{maxWidth : "18rem", maxHeight: "5rem"}}>
                                     <div className="card-body">
-                                        <h5 className="card-title">@Username</h5>
+                                        <h5 className="card-title" id="usernameFeed">@username</h5>
                                     </div>  
                                 </div>
                                 <div className="imagesFeed">
